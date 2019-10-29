@@ -25,10 +25,14 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "babylonjs": "^4.0.3",
-    "babylonjs-gui": "^4.0.3",
-    "babylonjs-loaders": "^4.0.3",
-    "babylonjs-materials": "^4.0.3",
+    "@babylonjs/core": "^4.1.0-alpha.24",
+    "@babylonjs/gui": "^4.1.0-alpha.24",
+    "@babylonjs/inspector": "^4.1.0-alpha.24",
+    "@babylonjs/loaders": "^4.1.0-alpha.24",
+    "@babylonjs/materials": "^4.1.0-alpha.24",
+    "@babylonjs/post-processes": "^4.1.0-alpha.24",
+    "@babylonjs/procedural-textures": "^4.1.0-alpha.24",
+    "@babylonjs/serializers": "^4.1.0-alpha.24",
     "cannon": "^0.6.2",
     "earcut": "^2.2.1",
     "lodash": "^4.17.15",

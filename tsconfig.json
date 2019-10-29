@@ -8,9 +8,6 @@
     "jsx": "react",
     "allowJs": true,
     "types": [
-      "babylonjs",
-      "babylonjs-gui",
-      "babylonjs-materials"
     ],
     "lib": [
       "es2016",
