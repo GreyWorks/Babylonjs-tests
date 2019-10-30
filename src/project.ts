@@ -1,8 +1,9 @@
 
-import { SceneLoader, Mesh, PBRMaterial, StandardMaterial, Material, VRExperienceHelper, Vector3, Scene, Engine, ArcRotateCamera, Light, HemisphericLight, CannonJSPlugin, MeshBuilder, StandardRenderingPipeline, Color3 } from '@babylonjs/core';
+import { SceneLoader, Mesh, PBRMaterial, StandardMaterial, Material, VRExperienceHelper, Vector3, Scene, Engine, ArcRotateCamera, Light, HemisphericLight, CannonJSPlugin, MeshBuilder, StandardRenderingPipeline, Color3, Texture } from '@babylonjs/core';
 import '@babylonjs/core/Debug/debugLayer'; // Augments the scene with the debug methods
 import '@babylonjs/inspector'; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
 import '@babylonjs/loaders/glTF';
+import { PBRMaterialExt } from './PBRMaterialExt';
 
 
 export class Project {
@@ -12,6 +13,10 @@ export class Project {
     private _scene: Scene;
     private _camera: ArcRotateCamera;
     private _light: Light;
+
+    private _texture1: Texture;
+    private _texture2: Texture;
+    private _texture3: Texture;
 
     constructor(canvasElement: string) {
         // Create canvas and engine
@@ -34,20 +39,29 @@ export class Project {
         this._light = new HemisphericLight("light", new Vector3(0, 1, 0), this._scene);
         this._scene.createDefaultEnvironment({createGround: true, createSkybox: true, setupImageProcessing: true});
 
-        SceneLoader.ImportMesh(null, '/assets/mesh/', 'princess.glb', this._scene, meshes => {
-            meshes[0].position.addInPlaceFromFloats(0, 0.06, 0);
-            meshes[0].rotate(Vector3.Up(), Math.PI);
+        const box = MeshBuilder.CreateBox("box", {size: 1}, this._scene);
+        box.position.addInPlaceFromFloats(0, 0.5, 0);
 
-            const pbrMat = this._scene.materials.find(mat => mat.name.includes('TextureAtlas'))! as PBRMaterial;
-            const standardMat = new StandardMaterial('PrincessMaterial', this._scene);
-            standardMat.emissiveTexture = pbrMat.albedoTexture.clone();
-            standardMat.disableLighting = true;
-            standardMat.sideOrientation = Material.ClockWiseSideOrientation;
-            pbrMat.dispose(true, false);
-            meshes.filter(mesh => mesh instanceof Mesh).map(mesh => mesh.material = standardMat);
+        const boxMaterial = new PBRMaterialExt("BoxMaterial", this._scene);
+        boxMaterial.metallic = 1;
+        boxMaterial.roughness = 0.1;
+        box.material = boxMaterial;
 
-        });
-     
+        this._texture1 = new Texture("./assets/texture/ground.jpg", this._scene);
+        this._texture2 = new Texture("./assets/texture/waterbump.png", this._scene);
+        boxMaterial.albedoTexture = this._texture2;
+        boxMaterial.bumpTexture = this._texture2;
+        // boxMaterial.detailTexture1 = this._texture2;
+
+        setInterval(() => {
+            if(boxMaterial.detailTexture1) {
+                boxMaterial.detailTexture1 = undefined;
+            } else {
+                boxMaterial.detailTexture1 = this._texture1;
+            }
+            
+        }, 2000);
+    
         // Physics engine also works
         // let gravity = new Vector3(0, -0.9, 0);
         // this._scene.enablePhysics(gravity, new CannonJSPlugin());

@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "baseUrl": ".",
+    "paths": {
+        "src/*": ["src/*"]
+    },
+    "experimentalDecorators": true,
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
@@ -12,6 +17,9 @@
     "lib": [
       "es2016",
       "dom"
-    ]
-  }
+    ],
+  },
+  "include": [
+    "src"
+  ]
 }
