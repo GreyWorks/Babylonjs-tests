@@ -35,6 +35,7 @@ export class Project {
         this._camera.attachControl(this._canvas);
         this._camera.wheelPrecision = 100;
         this._camera.lowerRadiusLimit = 0.1;
+        this._camera.minZ = 0.01;
         // create a basic light, aiming 0,1,0 - meaning, to the sky
         this._light = new HemisphericLight("light", new Vector3(0, 1, 0), this._scene);
         this._scene.createDefaultEnvironment({createGround: true, createSkybox: true, setupImageProcessing: true});
@@ -47,17 +48,24 @@ export class Project {
         boxMaterial.roughness = 0.1;
         box.material = boxMaterial;
 
-        this._texture1 = new Texture("./assets/texture/ground.jpg", this._scene);
-        this._texture2 = new Texture("./assets/texture/waterbump.png", this._scene);
-        boxMaterial.albedoTexture = this._texture2;
-        boxMaterial.bumpTexture = this._texture2;
-        // boxMaterial.detailTexture1 = this._texture2;
+        const nrm_test = new Texture("./assets/texture/wiki_example.png", this._scene);
+        nrm_test.level = -.5;
+        const nrm_tiles = new Texture("./assets/texture/nrm_tiles.png", this._scene);
+        nrm_tiles.level = 0.1;
+        const nrm_metal = new Texture("./assets/texture/nrm_bumps.png", this._scene);
+        nrm_metal.level = 0.2;
+
+        boxMaterial.bumpTexture = nrm_test;
+        boxMaterial.detailTexture1 = nrm_tiles;
+        boxMaterial.detailTexture2 = nrm_metal;
 
         setInterval(() => {
             if(boxMaterial.detailTexture1) {
                 boxMaterial.detailTexture1 = undefined;
+                boxMaterial.detailTexture2 = undefined;
             } else {
-                boxMaterial.detailTexture1 = this._texture1;
+                boxMaterial.detailTexture1 = nrm_tiles;
+                boxMaterial.detailTexture2 = nrm_metal;
             }
             
         }, 2000);
