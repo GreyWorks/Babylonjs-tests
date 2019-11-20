@@ -24,7 +24,12 @@ module.exports = {
   ],
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: distFolder
+    contentBase: distFolder,
+    disableHostCheck: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': '*',
+    },
   },
   module: {
     rules: [
