@@ -104,7 +104,12 @@ export class VRInteractions {
             controller.mesh.rotationQuaternion = new Quaternion();
         }
 
+        // Using real meshes for debugging purposes. 
+        // This can be changed to AbstractMesh as long there is no PhysicsImpostor on it.
+        // PhysicsImpostor needs a Mesh for the PhysicsObject
+        // As the controller does not have a Mesh if it can't be loaded with CORS, use this one for the controller impostor
         const anchor = MeshBuilder.CreateIcoSphere("VRAnchor_" + controller.hand, { radius: 0.01 }, this._scene);
+        anchor.visibility = 0;
         anchor.setAbsolutePosition(controller.mesh.absolutePosition);
         anchor.rotationQuaternion = new Quaternion();
         anchor.rotationQuaternion.copyFrom(controller.mesh.rotationQuaternion);
@@ -115,7 +120,7 @@ export class VRInteractions {
 
         // const tracker = new AbstractMesh("VRTracker" + controller.hand, this._scene);
         const tracker = MeshBuilder.CreateIcoSphere("VRTracker_" + controller.hand, { radius: 0.05 }, this._scene);
-        tracker.visibility = 0.5;
+        tracker.visibility = 0;
         tracker.physicsImpostor = new PhysicsImpostor(tracker, PhysicsImpostor.NoImpostor, { mass: 0 });
         tracker.rotationQuaternion = new Quaternion();
 

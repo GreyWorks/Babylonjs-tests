@@ -18,6 +18,7 @@ export class PhysicsGenerator {
             box.scaling.setAll(size);
             box.material = materials[matIdx];
             box.position = center.add(offset);
+            // TODO: correct mass calculation ... seems to do nothing when changed???
             box.physicsImpostor = new PhysicsImpostor(box, PhysicsImpostor.BoxImpostor, {mass: 1});
             box.metadata = (box.metadata && box.metadata !== null) ? box.metadata : {};
             box.metadata.interaction = new MetaInteraction();
