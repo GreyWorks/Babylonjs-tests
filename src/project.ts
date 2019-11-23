@@ -30,8 +30,10 @@ export class Project {
         // create a FreeCamera, and set its position to (x:0, y:5, z:-10)
 
         // Physics engine also works
-        let gravity = new Vector3(0, -0.99, 0);
+        let gravity = new Vector3(0, -0.98, 0);
         this._scene.enablePhysics(gravity, new CannonJSPlugin());
+        console.log(this._scene.getPhysicsEngine().getTimeStep(), this._engine.getDeltaTime());
+        this._scene._physicsEngine.setTimeStep(0.035);
         
         // this._camera = new ArcRotateCamera("Camera", 0, Math.PI / 3, 10, Vector3.Zero(), this._scene);
         // this._camera.attachControl(this._canvas);
@@ -48,7 +50,7 @@ export class Project {
         this._ground.metadata.interaction = groundInteraction;
         
 
-        SceneLoader.ImportMesh(null, '/assets/mesh/', 'princess.glb', this._scene, meshes => {
+/*         SceneLoader.ImportMesh(null, '/assets/mesh/', 'princess.glb', this._scene, meshes => {
             meshes[0].position.addInPlaceFromFloats(0, 0.00, 8);
             meshes[0].position.addInPlaceFromFloats(0, -0.014, 0);
             meshes[0].scalingDeterminant = 1.6;
@@ -63,12 +65,12 @@ export class Project {
             pbrMat.dispose(true, false);
             meshes.filter(mesh => mesh instanceof Mesh).map(mesh => mesh.material = standardMat);
 
-        });
+        }); */
 
 
         this._scene.debugLayer.show();
 
-        const vrHelper: VRExperienceHelper = this._scene.createDefaultVRExperience({defaultHeight: 1.6, useMultiview: true});
+        const vrHelper: VRExperienceHelper = this._scene.createDefaultVRExperience({defaultHeight: 1.6, useMultiview: true, laserToggle: true});
         
         vrHelper.enableInteractions();
         vrHelper.enableTeleportation({floorMeshes: [this._ground]});
@@ -77,7 +79,7 @@ export class Project {
         this._ground.physicsImpostor = new PhysicsImpostor(this._ground, PhysicsImpostor.BoxImpostor, {mass: 0, restitution: 0.9});
 
 
-        PhysicsGenerator.MakeRandomBoxes(this._scene, 5, new Vector3(0, 2, 3), new Vector3(1, 0.5, 1), 0.2);
+        PhysicsGenerator.MakeRandomBoxes(this._scene, 5, new Vector3(0, 2, 2), new Vector3(1, 0.5, 1), 0.5);
 
 
     }

@@ -14,11 +14,11 @@ export class PhysicsGenerator {
         for(let i = 0; i < amount; i++) {
             const matIdx = Math.round(Math.random() * materials.length);
             const offset = new Vector3(Math.random(), Math.random(), Math.random()).multiply(spread);
-            const box = MeshBuilder.CreateBox("PhysBox" + i, {size: 0.5});
+            const box = MeshBuilder.CreateBox("PhysBox" + i, {size: size});
             box.scaling.setAll(size);
             box.material = materials[matIdx];
             box.position = center.add(offset);
-            box.physicsImpostor = new PhysicsImpostor(box, PhysicsImpostor.BoxImpostor, {mass: Math.pow(size * 0.1, 3)});
+            box.physicsImpostor = new PhysicsImpostor(box, PhysicsImpostor.BoxImpostor, {mass: 1});
             box.metadata = (box.metadata && box.metadata !== null) ? box.metadata : {};
             box.metadata.interaction = new MetaInteraction();
         }
