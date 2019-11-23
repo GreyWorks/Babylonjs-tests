@@ -32,6 +32,8 @@ export class Project {
         // Physics engine also works
         let gravity = new Vector3(0, -0.98, 0);
         this._scene.enablePhysics(gravity, new CannonJSPlugin());
+        
+        // TODO: Find correct calculation for the timestep
         console.log(this._scene.getPhysicsEngine().getTimeStep(), this._engine.getDeltaTime());
         this._scene._physicsEngine.setTimeStep(0.035);
         

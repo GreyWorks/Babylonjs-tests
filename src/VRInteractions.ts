@@ -179,6 +179,7 @@ export class VRInteractions {
             if(ci.attachedMesh && ci.lastTriggerValue < this.sensitivities.trigger) {
                 const deltaPosition = ci.attachedMesh.absolutePosition.subtract(ci.trackerObject.absolutePosition);
                 const angularVelocity = ci.vrController.mesh.physicsImpostor.getAngularVelocity();
+                // TODO: find the correct forumla for scaling the velocity
                 const linearVelocity = deltaPosition.scale(400. / frameTimeMs);
 
                 ci.attachedMesh.physicsImpostor.setLinearVelocity(linearVelocity);
