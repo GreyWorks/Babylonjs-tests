@@ -23,10 +23,13 @@ export class VRInteractions {
         this._helper = vrHelper;
         this._scene = scene;
         this._controllerInfos = [];
+
         vrHelper.displayLaserPointer = true;
-        // make it red
+        // change laser color
+        // TODO: Change laser color... because this does not work.
         vrHelper.updateControllerLaserColor = true;
         vrHelper.changeLaserColor(this.laserColor);
+
         vrHelper.meshSelectionPredicate = mesh => (
             (mesh.metadata &&
                 mesh.metadata.interaction &&
