@@ -18,13 +18,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.ejs'
     }),
-    new CopyWebpackPlugin([
-      { from: 'src/assets', to: 'assets' },
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/assets', to: 'assets' }
+      ],
+    })
   ],
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: distFolder
+    static: distFolder
   },
   module: {
     rules: [

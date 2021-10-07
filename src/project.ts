@@ -38,14 +38,6 @@ export class Project {
             meshes[0].position.addInPlaceFromFloats(0, 0.06, 0);
             meshes[0].rotate(Vector3.Up(), Math.PI);
 
-            const pbrMat = this._scene.materials.find(mat => mat.name.includes('TextureAtlas'))! as PBRMaterial;
-            const standardMat = new StandardMaterial('PrincessMaterial', this._scene);
-            standardMat.emissiveTexture = pbrMat.albedoTexture.clone();
-            standardMat.disableLighting = true;
-            standardMat.sideOrientation = Material.ClockWiseSideOrientation;
-            pbrMat.dispose(true, false);
-            meshes.filter(mesh => mesh instanceof Mesh).map(mesh => mesh.material = standardMat);
-
         });
      
         // Physics engine also works
